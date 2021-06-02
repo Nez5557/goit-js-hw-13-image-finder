@@ -18,7 +18,7 @@ function onSearch(e) {
     e.preventDefault();
     
     picApiService.query = e.currentTarget.elements.query.value;
-    if (picApiService.query === '') {
+    if (picApiService.query.trim() === '') {
         return alert('Query can not be empty')
     };
     loadMoreBtn.show();
