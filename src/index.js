@@ -14,14 +14,13 @@ const loadMoreBtn = new LoadMoreBtn({
 refs.searchForm.addEventListener('submit', onSearch)
 loadMoreBtn.btn.addEventListener('click', onLoadMore)
 
-function onSearch(e) {
+function onSearch(e, hints) {
     e.preventDefault();
-    
     picApiService.query = e.currentTarget.elements.query.value;
     if (picApiService.query.trim() === '') {
         return alert('Query can not be empty')
     };
-    loadMoreBtn.show();
+    if (hits.length !== 0 && hits.length > 11) {  loadMoreBtn.show()};
     picApiService.resetPage();
     picApiService.fetchPic().then(hits => {
         clearGallery();
