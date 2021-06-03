@@ -14,18 +14,26 @@ const loadMoreBtn = new LoadMoreBtn({
 refs.searchForm.addEventListener('submit', onSearch)
 loadMoreBtn.btn.addEventListener('click', onLoadMore)
 
-function onSearch(e, hints) {
+function onSearch(e) {
     e.preventDefault();
-    picApiService.query = e.currentTarget.elements.query.value;
-    if (picApiService.query.trim() === '') {
-        return alert('Query can not be empty')
-    };
-    if (hits.length !== 0 && hits.length > 11) {  loadMoreBtn.show()};
+    picApiService.query = e.currentTarget.elements.query.value.trim();
+    if (picApiService.query === '') {
+        return alert('Query can not be empty');
+    }
     picApiService.resetPage();
-    picApiService.fetchPic().then(hits => {
-        clearGallery();
-        renderPicMarkup(hits);
-    }).catch(error => console.log(error));
+    picApiService
+        .fetchPic()
+        .then((hits) => {
+            if (hits.length !== 0) {
+                loadMoreBtn.show();
+            }
+            clearGallery();
+            renderPicMarkup(hits);
+            if (hits.length >= 12) {
+                loadMoreBtn.hide();
+            }
+        })
+        .catch((error) => console.log(error));
 }
 
 function onLoadMore() {
