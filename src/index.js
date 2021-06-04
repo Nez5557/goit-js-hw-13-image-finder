@@ -29,7 +29,7 @@ function onSearch(e) {
             }
             clearGallery();
             renderPicMarkup(hits);
-            if (hits.length >= 12) {
+            if (hits.length < 12) {
                 loadMoreBtn.hide();
             }
         })
