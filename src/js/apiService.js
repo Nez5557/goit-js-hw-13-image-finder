@@ -8,13 +8,11 @@ export default class PicApiService {
         this.searchQuery = searchQuery;
     }
     
-    fetchPic() {
-        return fetch(`${BASE_URL}&q=${this.searchQuery}&page=${this.page}&per_page=${perPage}&key=${API_KEY}`)
-            .then(response => response.json())
-            .then(({hits}) => {
-                this.page += 1;
-                return hits;
-            })
+    async fetchPic() {
+        const response = await fetch(`${BASE_URL}&q=${this.searchQuery}&page=${this.page}&per_page=${perPage}&key=${API_KEY}`);
+        const { hits } = await response.json();
+        this.page += 1;
+        return hits;
     }
 
     resetPage() {

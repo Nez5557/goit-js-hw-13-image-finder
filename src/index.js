@@ -24,6 +24,7 @@ function onSearch(e) {
     picApiService
         .fetchPic()
         .then((hits) => {
+if (hits.length === 0) { return alert('Sorry, enter correct query') };
             if (hits.length !== 0) {
                 loadMoreBtn.show();
             }
